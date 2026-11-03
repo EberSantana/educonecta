@@ -1,0 +1,264 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* IF Official Brand Colors (Instituto Federal de Sergipe) */
+    --if-green-dark: #145a27;
+    --if-green: #1e7e34;
+    --if-green-vibrant: #238636;
+    --if-green-light: #e8f5e9;
+    --if-green-soft: #f0fdf4;
+    --if-green-border: #248c3d;
+
+    --if-red: #ce2029;
+    --if-red-dark: #a8171e;
+    --if-red-light: #fef2f2;
+    --if-red-border: #fca5a5;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8fafc;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Hide scrollbar for Chrome, Safari, Edge, Firefox */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* IF Institucional Component Utilities inspired by card1 */
+.if-header-bar {
+  background-color: #1e7e34;
+  color: #ffffff;
+}
+
+.if-red-stripe {
+  height: 4px;
+  background-color: #ce2029;
+}
+
+.if-badge-red {
+  background-color: #ce2029;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.if-badge-green {
+  background-color: #1e7e34;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.if-tag {
+  background-color: rgba(232, 245, 233, 0.85);
+  border: 1.5px solid #248c3d;
+  color: #166534;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.if-tag:hover {
+  background-color: #e8f5e9;
+  border-color: #166534;
+  color: #14532d;
+}
+
+.if-tag-active {
+  background-color: #1e7e34 !important;
+  border-color: #145a27 !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.if-btn-primary {
+  background-color: #1e7e34;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.if-btn-primary:hover {
+  background-color: #166534;
+}
+
+.if-btn-red {
+  background-color: #ce2029;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.if-btn-red:hover {
+  background-color: #a8171e;
+}
+
+/* =========================================================================
+   WCAG 2.1 AA & e-MAG Accessibility Guidelines & High Contrast Styles
+   ========================================================================= */
+
+/* 1. Visible Keyboard Focus (Universal Focus Outline) */
+:focus-visible {
+  outline: 3px solid #1e7e34 !important;
+  outline-offset: 2px !important;
+}
+
+/* 2. Font Scaling Modes */
+body.font-size-large {
+  font-size: 115% !important;
+}
+
+body.font-size-xlarge {
+  font-size: 130% !important;
+}
+
+/* 3. High Contrast Mode (e-MAG / WCAG AAA compliant) */
+body.high-contrast {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast header,
+body.high-contrast nav,
+body.high-contrast main,
+body.high-contrast section,
+body.high-contrast div,
+body.high-contrast aside,
+body.high-contrast article {
+  background-color: #0a0a0a !important;
+  color: #ffffff !important;
+  border-color: #444444 !important;
+}
+
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast label,
+body.high-contrast li,
+body.high-contrast td,
+body.high-contrast th {
+  color: #ffffff !important;
+}
+
+body.high-contrast a {
+  color: #ffff00 !important;
+  text-decoration: underline !important;
+}
+
+body.high-contrast button {
+  border-color: #ffffff !important;
+}
+
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+  background-color: #121212 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+
+body.high-contrast :focus-visible {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 3px !important;
+}
+
+body.high-contrast .bg-white,
+body.high-contrast .bg-slate-50,
+body.high-contrast .bg-slate-100 {
+  background-color: #121212 !important;
+  border-color: #555555 !important;
+}
+
+/* =========================================================================
+   Code XR Glassy Dashboard v2 Theme Utilities (Modern & Minimal UI)
+   ========================================================================= */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel-hover {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-panel-hover:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px 0 rgba(16, 185, 129, 0.15);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s ease;
+}
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.glass-emerald-glow {
+  box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.35);
+}
+
+.glass-crimson-glow {
+  box-shadow: 0 0 25px -5px rgba(206, 32, 41, 0.35);
+}
+
+
