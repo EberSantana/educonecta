@@ -35,7 +35,6 @@ import { EditTurmaModal } from './components/EditTurmaModal';
 import { EditMaterialModal } from './components/EditMaterialModal';
 import { StorageInfoModal } from './components/StorageInfoModal';
 import { AccessibilityModal } from './components/AccessibilityModal';
-import { GlassyDashboardV2 } from './components/GlassyDashboardV2';
 import { LessonsScheduleModal } from './components/LessonsScheduleModal';
 import {
   getStudentNotificationAlerts,
@@ -296,7 +295,6 @@ export default function App() {
   const [selectedMaterialForEdit, setSelectedMaterialForEdit] = useState<Material | null>(null);
 
   const [isStorageInfoOpen, setIsStorageInfoOpen] = useState(false);
-  const [glassyScheduleDiscipline, setGlassyScheduleDiscipline] = useState<Discipline | null>(null);
 
   // Accessibility & e-MAG / WCAG 2.1 AA States
   const [isAccessibilityModalOpen, setIsAccessibilityModalOpen] = useState(false);
@@ -307,15 +305,6 @@ export default function App() {
     const saved = localStorage.getItem('edu_font_size');
     return saved === 'large' || saved === 'xlarge' ? saved : 'normal';
   });
-
-  // Theme Aesthetic (Code XR Glassy v2 vs Classic Official IFS)
-  const [themeAesthetic, setThemeAesthetic] = useState<'classic' | 'glassy'>(() => {
-    return localStorage.getItem('edu_theme_aesthetic') === 'glassy' ? 'glassy' : 'classic';
-  });
-
-  useEffect(() => {
-    localStorage.setItem('edu_theme_aesthetic', themeAesthetic);
-  }, [themeAesthetic]);
 
   // Apply high contrast & font sizing classes to document.body
   useEffect(() => {
@@ -1026,11 +1015,7 @@ export default function App() {
   const openQuestionsCount = discussions.filter((d) => d.status === 'aberta').length;
 
   return (
-    <div
-      className={`min-h-screen flex flex-col font-sans ${
-        themeAesthetic === 'glassy' ? 'bg-[#070b12] text-slate-100' : 'bg-slate-50 text-slate-900'
-      }`}
-    >
+    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900 font-sans">
       {/* Salto de Navegação (Skip Link) - WCAG 2.1 AA / e-MAG */}
       <a
         href="#conteudo-principal"
@@ -1111,59 +1096,30 @@ export default function App() {
         </div>
       )}
 
-      {themeAesthetic === 'glassy' ? (
-        <GlassyDashboardV2
-          courses={courses}
-          disciplines={disciplines}
-          turmas={turmas}
-          students={students}
-          professors={professors}
-          lessons={lessons}
-          materials={materials}
-          announcements={announcements}
-          discussions={discussions}
-          currentUser={currentUser}
-          onToggleRole={handleToggleRole}
-          onLogout={handleLogout}
-          onSelectDisciplineForSchedule={(discipline) => setGlassyScheduleDiscipline(discipline)}
-          onSelectMaterialPreview={(material) => setPreviewMaterial(material)}
-          onSwitchToClassicTheme={() => setThemeAesthetic('classic')}
-          onOpenAccessibilityModal={() => setIsAccessibilityModalOpen(true)}
-          onSelectTab={(tab) => {
-            setThemeAesthetic('classic');
-            setCurrentTab(tab);
-          }}
-        />
-      ) : (
-        <>
-          {/* Header com Barra de Acessibilidade e-MAG */}
-          <Header
-            currentTab={currentTab}
-            onSelectTab={setCurrentTab}
-            currentUser={currentUser}
-            onToggleRole={handleToggleRole}
-            onLogout={handleLogout}
-            unreadAnnouncementsCount={unreadAnnouncementsCount}
-            openQuestionsCount={openQuestionsCount}
-            pendingAssignmentsCount={pendingAssignmentsCount}
-            onOpenAccessibilityModal={() => setIsAccessibilityModalOpen(true)}
-            highContrast={highContrast}
-            onToggleHighContrast={() => setHighContrast((prev) => !prev)}
-            fontSize={fontSize}
-            onChangeFontSize={setFontSize}
-            themeAesthetic={themeAesthetic}
-            onToggleThemeAesthetic={() =>
-              setThemeAesthetic((prev) => (prev === 'classic' ? 'glassy' : 'classic'))
-            }
-          />
+      {/* Header com Barra de Acessibilidade e-MAG */}
+      <Header
+        currentTab={currentTab}
+        onSelectTab={setCurrentTab}
+        currentUser={currentUser}
+        onToggleRole={handleToggleRole}
+        onLogout={handleLogout}
+        unreadAnnouncementsCount={unreadAnnouncementsCount}
+        openQuestionsCount={openQuestionsCount}
+        pendingAssignmentsCount={pendingAssignmentsCount}
+        onOpenAccessibilityModal={() => setIsAccessibilityModalOpen(true)}
+        highContrast={highContrast}
+        onToggleHighContrast={() => setHighContrast((prev) => !prev)}
+        fontSize={fontSize}
+        onChangeFontSize={setFontSize}
+      />
 
-          {/* Main Container */}
-          <main
-            id="conteudo-principal"
-            role="main"
-            tabIndex={-1}
-            className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 focus:outline-none"
-          >
+      {/* Main Container */}
+      <main
+        id="conteudo-principal"
+        role="main"
+        tabIndex={-1}
+        className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 focus:outline-none"
+      >
         {/* Active Context Bar - Separação Clara de Curso, Turma e Matéria */}
         <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs space-y-3">
           {/* Linha 1: Curso, Turma e Identificação do Usuário */}
@@ -1442,8 +1398,6 @@ export default function App() {
           />
         )}
       </main>
-      </>
-      )}
 
       {/* Modals */}
       {previewMaterial && (
@@ -1589,55 +1543,34 @@ export default function App() {
         onChangeFontSize={setFontSize}
       />
 
-      {/* Rodapé Acessível com Base Legal e-MAG / WCAG 2.1 AA (Tema Clássico) */}
-      {themeAesthetic === 'classic' && (
-        <footer
-          role="contentinfo"
-          aria-label="Rodapé institucional e declaração de acessibilidade"
-          className="bg-slate-900 text-slate-300 text-xs py-6 border-t border-slate-800 mt-auto"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-center md:text-left">
-              <div className="font-bold text-white text-sm">
-                Instituto Federal de Educação, Ciência e Tecnologia de Sergipe · Campus Tobias Barreto
-              </div>
-              <div className="text-[11px] text-slate-400 mt-1">
-                EduConecta IFS · Desenvolvido sob as diretrizes de Acessibilidade Digital WCAG 2.1 AA, e-MAG (Lei nº 13.146/2015) e LGPD (Lei nº 13.709/2018).
-              </div>
+      {/* Rodapé Acessível com Base Legal e-MAG / WCAG 2.1 AA */}
+      <footer
+        role="contentinfo"
+        aria-label="Rodapé institucional e declaração de acessibilidade"
+        className="bg-slate-900 text-slate-300 text-xs py-6 border-t border-slate-800 mt-auto"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-center md:text-left">
+            <div className="font-bold text-white text-sm">
+              Instituto Federal de Educação, Ciência e Tecnologia de Sergipe · Campus Tobias Barreto
             </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
-              <button
-                onClick={() => setIsAccessibilityModalOpen(true)}
-                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 font-semibold transition border border-slate-700 underline flex items-center gap-1.5"
-              >
-                <span>Acessibilidade & Base Legal [Alt + 3]</span>
-              </button>
-              <span className="text-slate-600 hidden sm:inline" aria-hidden="true">·</span>
-              <span className="text-slate-400">Coordenação de Informática (COINF)</span>
+            <div className="text-[11px] text-slate-400 mt-1">
+              EduConecta IFS · Desenvolvido sob as diretrizes de Acessibilidade Digital WCAG 2.1 AA, e-MAG (Lei nº 13.146/2015) e LGPD (Lei nº 13.709/2018).
             </div>
           </div>
-        </footer>
-      )}
 
-      {/* Modal de Cronograma acionado a partir do Code XR Glassy Dashboard v2 */}
-      {glassyScheduleDiscipline && (
-        <LessonsScheduleModal
-          discipline={glassyScheduleDiscipline}
-          course={courses.find((c) => c.id === glassyScheduleDiscipline.courseId)}
-          lessons={lessons}
-          userRole={currentUser.role}
-          onClose={() => setGlassyScheduleDiscipline(null)}
-          onNavigateToMaterials={(discId, lessonNum) => {
-            setGlassyScheduleDiscipline(null);
-            setSelectedDisciplineId(discId);
-            if (lessonNum) setSelectedLessonFilter(lessonNum);
-            setThemeAesthetic('classic');
-            setCurrentTab('materials');
-          }}
-          onToggleLessonStatus={handleToggleLessonStatus}
-        />
-      )}
+          <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
+            <button
+              onClick={() => setIsAccessibilityModalOpen(true)}
+              className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 font-semibold transition border border-slate-700 underline flex items-center gap-1.5"
+            >
+              <span>Acessibilidade & Base Legal [Alt + 3]</span>
+            </button>
+            <span className="text-slate-600 hidden sm:inline" aria-hidden="true">·</span>
+            <span className="text-slate-400">Coordenação de Informática (COINF)</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

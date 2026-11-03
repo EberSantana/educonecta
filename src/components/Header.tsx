@@ -35,8 +35,6 @@ interface HeaderProps {
   onToggleHighContrast: () => void;
   fontSize: 'normal' | 'large' | 'xlarge';
   onChangeFontSize: (size: 'normal' | 'large' | 'xlarge') => void;
-  themeAesthetic?: 'classic' | 'glassy';
-  onToggleThemeAesthetic?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -53,8 +51,6 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleHighContrast,
   fontSize,
   onChangeFontSize,
-  themeAesthetic = 'classic',
-  onToggleThemeAesthetic,
 }) => {
   const isProfessor = currentUser.role === 'professor';
 
@@ -285,20 +281,6 @@ export const Header: React.FC<HeaderProps> = ({
                 </div>
               </div>
             </div>
-
-            {/* Code XR Glassy v2 Theme Switcher */}
-            {onToggleThemeAesthetic && (
-              <button
-                onClick={onToggleThemeAesthetic}
-                title="Alternar entre o Tema Clássico Oficial IFS e o Code XR Glassy Dashboard v2"
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-200 bg-gradient-to-r from-emerald-50 to-teal-50 hover:from-emerald-100 hover:to-teal-100 text-[#145a27] transition shadow-2xs"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
-                <span className="hidden sm:inline">
-                  {themeAesthetic === 'glassy' ? 'Tema Clássico IFS' : 'Code XR Glassy v2'}
-                </span>
-              </button>
-            )}
 
             {/* Quick Switch Role button */}
             <button
