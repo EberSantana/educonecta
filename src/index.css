@@ -219,3 +219,123 @@ body.high-contrast .bg-slate-100 {
   background-color: #121212 !important;
   border-color: #555555 !important;
 }
+
+/* =========================================================================
+   Acessibilidade Interativa (Estilo Audima / e-MAG / WCAG 2.1 AA)
+   ========================================================================= */
+
+/* Tamanho de Fonte Global */
+body.font-size-small {
+  font-size: 88% !important;
+}
+body.font-size-large {
+  font-size: 115% !important;
+}
+body.font-size-xlarge {
+  font-size: 130% !important;
+}
+
+/* Monocromático (Escala de Cinza) */
+body.a11y-monochrome {
+  filter: grayscale(100%) !important;
+}
+
+/* Esconder Imagens e Ilustrações para Foco Cognitivo */
+body.a11y-hide-images img,
+body.a11y-hide-images svg:not(.a11y-keep-icon),
+body.a11y-hide-images [style*="background-image"] {
+  opacity: 0.08 !important;
+  filter: blur(4px) !important;
+}
+
+/* Modos de Cor de Fundo */
+body.a11y-bg-sepia {
+  background-color: #f7eee2 !important;
+  color: #382d20 !important;
+}
+body.a11y-bg-sepia .bg-white,
+body.a11y-bg-sepia .bg-slate-50,
+body.a11y-bg-sepia .bg-slate-100 {
+  background-color: #fdf7ee !important;
+  color: #382d20 !important;
+  border-color: #e6d7c4 !important;
+}
+
+body.a11y-bg-dark {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+body.a11y-bg-dark .bg-white,
+body.a11y-bg-dark .bg-slate-50,
+body.a11y-bg-dark .bg-slate-100 {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+body.a11y-bg-yellow-black {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+}
+body.a11y-bg-yellow-black .bg-white,
+body.a11y-bg-yellow-black .bg-slate-50,
+body.a11y-bg-yellow-black .bg-slate-100 {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+body.a11y-bg-yellow-black h1,
+body.a11y-bg-yellow-black h2,
+body.a11y-bg-yellow-black h3,
+body.a11y-bg-yellow-black p,
+body.a11y-bg-yellow-black span {
+  color: #ffff00 !important;
+}
+
+/* Fonte para Dislexia / Leitura Facilitada */
+body.a11y-dyslexia-font,
+body.a11y-dyslexia-font p,
+body.a11y-dyslexia-font h1,
+body.a11y-dyslexia-font h2,
+body.a11y-dyslexia-font h3,
+body.a11y-dyslexia-font span,
+body.a11y-dyslexia-font button,
+body.a11y-dyslexia-font a {
+  font-family: 'Trebuchet MS', 'Verdana', sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.12em !important;
+  line-height: 1.85 !important;
+}
+
+/* Destacar Links e Elementos Clicáveis */
+body.a11y-highlight-links a,
+body.a11y-highlight-links button:not(.a11y-ruler-btn) {
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  outline: 2px dashed #0284c7 !important;
+  outline-offset: 2px !important;
+}
+
+/* Régua de Leitura Horizontal (Apoio a TDAH e Dislexia) */
+.a11y-reading-ruler {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 42px;
+  background: rgba(254, 240, 138, 0.28);
+  border-top: 2px solid #ca8a04;
+  border-bottom: 2px solid #ca8a04;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
+}
+
+/* Destaque do Trecho em Leitura por Voz (Text-to-Speech) */
+.a11y-speaking-highlight {
+  outline: 3px solid #10b981 !important;
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+

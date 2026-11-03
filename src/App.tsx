@@ -35,6 +35,7 @@ import { EditTurmaModal } from './components/EditTurmaModal';
 import { EditMaterialModal } from './components/EditMaterialModal';
 import { StorageInfoModal } from './components/StorageInfoModal';
 import { AccessibilityModal } from './components/AccessibilityModal';
+import { AccessibilityWidget } from './components/AccessibilityWidget';
 import { LessonsScheduleModal } from './components/LessonsScheduleModal';
 import {
   getStudentNotificationAlerts,
@@ -297,6 +298,7 @@ export default function App() {
   const [isStorageInfoOpen, setIsStorageInfoOpen] = useState(false);
 
   // Accessibility & e-MAG / WCAG 2.1 AA States
+  const [isA11yWidgetOpen, setIsA11yWidgetOpen] = useState(false);
   const [isAccessibilityModalOpen, setIsAccessibilityModalOpen] = useState(false);
   const [highContrast, setHighContrast] = useState<boolean>(() => {
     return localStorage.getItem('edu_high_contrast') === 'true';
@@ -343,7 +345,7 @@ export default function App() {
           firstNavBtn?.focus();
         } else if (e.key === '3') {
           e.preventDefault();
-          setIsAccessibilityModalOpen(true);
+          setIsA11yWidgetOpen((prev) => !prev);
         } else if (e.key === '4') {
           e.preventDefault();
           setHighContrast((prev) => !prev);
@@ -1106,7 +1108,7 @@ export default function App() {
         unreadAnnouncementsCount={unreadAnnouncementsCount}
         openQuestionsCount={openQuestionsCount}
         pendingAssignmentsCount={pendingAssignmentsCount}
-        onOpenAccessibilityModal={() => setIsAccessibilityModalOpen(true)}
+        onOpenAccessibilityModal={() => setIsA11yWidgetOpen(true)}
         highContrast={highContrast}
         onToggleHighContrast={() => setHighContrast((prev) => !prev)}
         fontSize={fontSize}
@@ -1533,7 +1535,21 @@ export default function App() {
         materialsCount={materials.length}
       />
 
-      {/* Modal de Acessibilidade & Base Legal */}
+      {/* Painel Interativo de Acessibilidade Digital (Estilo Audima / e-MAG / WCAG 2.1 AA) */}
+      <AccessibilityWidget
+        isOpen={isA11yWidgetOpen}
+        onClose={() => setIsA11yWidgetOpen(false)}
+        onOpenLegalModal={() => {
+          setIsA11yWidgetOpen(false);
+          setIsAccessibilityModalOpen(true);
+        }}
+        highContrast={highContrast}
+        onToggleHighContrast={() => setHighContrast((prev) => !prev)}
+        fontSize={fontSize}
+        onChangeFontSize={setFontSize}
+      />
+
+      {/* Modal Detalhado de Legislação & Conformidade (Lei nº 13.146/2015, e-MAG) */}
       <AccessibilityModal
         isOpen={isAccessibilityModalOpen}
         onClose={() => setIsAccessibilityModalOpen(false)}
@@ -1542,6 +1558,17 @@ export default function App() {
         fontSize={fontSize}
         onChangeFontSize={setFontSize}
       />
+
+      {/* Botão Flutuante de Acessibilidade Digital (Inspirado no Audima / e-MAG / WCAG 2.1 AA) */}
+      <button
+        onClick={() => setIsA11yWidgetOpen((prev) => !prev)}
+        aria-label="Abrir Painel de Acessibilidade Digital e Leitor de Tela"
+        title="Painel de Acessibilidade Digital (Alt + 3)"
+        className="fixed bottom-6 left-6 z-40 bg-[#1e7e34] hover:bg-[#145a27] text-white font-bold p-3 sm:px-4 sm:py-2.5 rounded-full shadow-2xl border-2 border-emerald-300 flex items-center gap-2 transition hover:scale-105 focus:outline-none focus:ring-4 focus:ring-yellow-300 cursor-pointer"
+      >
+        <span className="text-base sm:text-lg" aria-hidden="true">♿</span>
+        <span className="text-xs hidden sm:inline font-bold">Acessibilidade</span>
+      </button>
 
       {/* Rodapé Acessível com Base Legal e-MAG / WCAG 2.1 AA */}
       <footer
@@ -1561,7 +1588,7 @@ export default function App() {
 
           <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
             <button
-              onClick={() => setIsAccessibilityModalOpen(true)}
+              onClick={() => setIsA11yWidgetOpen(true)}
               className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 font-semibold transition border border-slate-700 underline flex items-center gap-1.5"
             >
               <span>Acessibilidade & Base Legal [Alt + 3]</span>
