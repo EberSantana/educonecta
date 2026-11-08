@@ -6,6 +6,10 @@ import {
   CheckCircle2,
   ArrowRight,
   X,
+  Filter,
+  GraduationCap,
+  Users,
+  RotateCcw,
 } from 'lucide-react';
 import { Header } from './components/Header';
 import { AuthScreen } from './components/AuthScreen';
@@ -1122,14 +1126,20 @@ export default function App() {
         tabIndex={-1}
         className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 focus:outline-none"
       >
-        {/* Active Context Bar - Separação Clara de Curso, Turma e Matéria */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs space-y-3">
-          {/* Linha 1: Curso, Turma e Identificação do Usuário */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-slate-100">
-            <div className="flex flex-wrap items-center gap-2.5 text-xs">
+        {/* Barra Unificada de Contexto Acadêmico (Curso · Turma · Matéria) */}
+        <div className="bg-white rounded-xl border border-slate-200 p-3 shadow-xs">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2 text-xs flex-1">
+              {/* Badge Contexto */}
+              <div className="flex items-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[11px] shrink-0 mr-0.5">
+                <Filter className="w-3.5 h-3.5 text-[#1e7e34]" />
+                <span className="hidden sm:inline">Filtrar:</span>
+              </div>
+
               {/* Seletor de Curso */}
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 shadow-2xs">
-                <span className="font-semibold text-slate-500">Curso:</span>
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-2.5 py-1.5 shadow-2xs transition">
+                <GraduationCap className="w-4 h-4 text-[#1e7e34] shrink-0" />
+                <span className="font-semibold text-slate-500 text-[11px] shrink-0">Curso:</span>
                 <select
                   value={selectedCourseId}
                   onChange={(e) => {
@@ -1137,8 +1147,9 @@ export default function App() {
                     setSelectedCourseId(cId);
                     const matchingTurma = turmas.find((t) => t.courseId === cId);
                     setSelectedTurmaId(matchingTurma ? matchingTurma.id : 'all');
+                    setSelectedDisciplineId('all');
                   }}
-                  className="bg-transparent font-bold text-slate-800 text-xs focus:outline-none cursor-pointer max-w-[200px] truncate"
+                  className="bg-transparent font-bold text-slate-900 text-xs focus:outline-none cursor-pointer max-w-[190px] truncate"
                 >
                   <option value="all">Todos os Cursos</option>
                   {courses.map((c) => (
@@ -1150,8 +1161,9 @@ export default function App() {
               </div>
 
               {/* Seletor de Turma */}
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1.5 shadow-2xs">
-                <span className="font-semibold text-slate-500">Turma:</span>
+              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-2.5 py-1.5 shadow-2xs transition">
+                <Users className="w-4 h-4 text-[#1e7e34] shrink-0" />
+                <span className="font-semibold text-slate-500 text-[11px] shrink-0">Turma:</span>
                 <select
                   value={selectedTurmaId}
                   onChange={(e) => {
@@ -1162,7 +1174,7 @@ export default function App() {
                       if (t?.disciplineId) setSelectedDisciplineId(t.disciplineId);
                     }
                   }}
-                  className="bg-transparent font-bold text-slate-800 text-xs focus:outline-none cursor-pointer max-w-[240px] truncate"
+                  className="bg-transparent font-bold text-slate-900 text-xs focus:outline-none cursor-pointer max-w-[210px] truncate"
                 >
                   <option value="all">Todas as Turmas</option>
                   {(selectedCourseId === 'all'
@@ -1179,55 +1191,48 @@ export default function App() {
                 </select>
               </div>
 
-              {/* Atalho do Aluno para Matrículas / Troca de Turma */}
-              {currentUser.role === 'student' && (
+              {/* Seletor de Matéria / Disciplina (Combobox Acessível com Busca) */}
+              <div className="flex items-center">
+                <DisciplineSelector
+                  disciplines={
+                    selectedCourseId === 'all'
+                      ? disciplines
+                      : disciplines.filter((d) => d.courseId === selectedCourseId)
+                  }
+                  selectedDisciplineId={selectedDisciplineId}
+                  onSelectDiscipline={setSelectedDisciplineId}
+                  selectedCourseId={selectedCourseId}
+                />
+              </div>
+
+              {/* Botão Limpar Filtros quando houver qualquer filtro aplicado */}
+              {(selectedCourseId !== 'all' || selectedTurmaId !== 'all' || selectedDisciplineId !== 'all') && (
                 <button
-                  onClick={() => setCurrentTab('turmas')}
-                  className="px-2.5 py-1.5 text-xs font-semibold text-[#166534] bg-[#e8f5e9] hover:bg-[#d5ecd9] rounded-lg transition border border-[#248c3d]/40"
+                  type="button"
+                  onClick={() => {
+                    setSelectedCourseId('all');
+                    setSelectedTurmaId('all');
+                    setSelectedDisciplineId('all');
+                  }}
+                  className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition border border-dashed border-slate-300 shrink-0"
+                  title="Redefinir todos os filtros"
                 >
-                  + Escolher / Trocar Turma
+                  <RotateCcw className="w-3 h-3 text-slate-400" />
+                  <span>Limpar</span>
                 </button>
               )}
             </div>
 
-            {/* Identificação do Usuário */}
-            <div className="flex items-center gap-2 text-xs text-slate-500 shrink-0">
-              <span className="w-2 h-2 rounded-full bg-[#1e7e34]" />
-              <span>
-                Conectado: <strong className="text-slate-800">{currentUser.name}</strong>
-              </span>
-              <span aria-hidden="true">·</span>
-              <span className="capitalize font-bold text-[#1e7e34]">
-                {currentUser.role === 'professor' ? 'Docente' : 'Discente'}
-              </span>
-              {currentUser.matricula && (
-                <>
-                  <span aria-hidden="true">·</span>
-                  <span className="font-mono text-[11px] text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
-                    Matrícula: {currentUser.matricula}
-                  </span>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Linha 2: Matérias / Disciplinas vinculadas */}
-          <div className="flex flex-col md:flex-row md:items-center gap-2.5 pt-0.5">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 shrink-0">
-              Matéria / Disciplina:
-            </span>
-            <div className="flex-1 min-w-0">
-              <DisciplineSelector
-                disciplines={
-                  selectedCourseId === 'all'
-                    ? disciplines
-                    : disciplines.filter((d) => d.courseId === selectedCourseId)
-                }
-                selectedDisciplineId={selectedDisciplineId}
-                onSelectDiscipline={setSelectedDisciplineId}
-                selectedCourseId={selectedCourseId}
-              />
-            </div>
+            {/* Ação rápida para o Aluno */}
+            {currentUser.role === 'student' && (
+              <button
+                type="button"
+                onClick={() => setCurrentTab('turmas')}
+                className="px-3 py-1.5 text-xs font-semibold text-[#166534] bg-[#e8f5e9] hover:bg-[#d5ecd9] rounded-xl transition border border-[#248c3d]/40 shrink-0 self-start lg:self-center"
+              >
+                + Escolher / Trocar Turma
+              </button>
+            )}
           </div>
         </div>
 
