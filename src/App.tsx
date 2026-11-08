@@ -1212,19 +1212,22 @@ export default function App() {
           </div>
 
           {/* Linha 2: Matérias / Disciplinas vinculadas */}
-          <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pt-0.5">
+          <div className="flex flex-col md:flex-row md:items-center gap-2.5 pt-0.5">
             <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 shrink-0">
               Matéria / Disciplina:
             </span>
-            <DisciplineSelector
-              disciplines={
-                selectedCourseId === 'all'
-                  ? disciplines
-                  : disciplines.filter((d) => d.courseId === selectedCourseId)
-              }
-              selectedDisciplineId={selectedDisciplineId}
-              onSelectDiscipline={setSelectedDisciplineId}
-            />
+            <div className="flex-1 min-w-0">
+              <DisciplineSelector
+                disciplines={
+                  selectedCourseId === 'all'
+                    ? disciplines
+                    : disciplines.filter((d) => d.courseId === selectedCourseId)
+                }
+                selectedDisciplineId={selectedDisciplineId}
+                onSelectDiscipline={setSelectedDisciplineId}
+                selectedCourseId={selectedCourseId}
+              />
+            </div>
           </div>
         </div>
 
