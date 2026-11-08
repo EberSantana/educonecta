@@ -1,0 +1,6 @@
+{
+  "name": "EduConecta - Portal Acadêmico do Professor",
+  "description": "Portal acadêmico para gestão de disciplinas, publicação de materiais didáticos, tarefas e interação contínua entre professor e alunos.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

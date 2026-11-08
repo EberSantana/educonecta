@@ -1,0 +1,341 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* IF Official Brand Colors (Instituto Federal de Sergipe) */
+    --if-green-dark: #145a27;
+    --if-green: #1e7e34;
+    --if-green-vibrant: #238636;
+    --if-green-light: #e8f5e9;
+    --if-green-soft: #f0fdf4;
+    --if-green-border: #248c3d;
+
+    --if-red: #ce2029;
+    --if-red-dark: #a8171e;
+    --if-red-light: #fef2f2;
+    --if-red-border: #fca5a5;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #f8fafc;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Hide scrollbar for Chrome, Safari, Edge, Firefox */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* IF Institucional Component Utilities inspired by card1 */
+.if-header-bar {
+  background-color: #1e7e34;
+  color: #ffffff;
+}
+
+.if-red-stripe {
+  height: 4px;
+  background-color: #ce2029;
+}
+
+.if-badge-red {
+  background-color: #ce2029;
+  color: #ffffff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.if-badge-green {
+  background-color: #1e7e34;
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.if-tag {
+  background-color: rgba(232, 245, 233, 0.85);
+  border: 1.5px solid #248c3d;
+  color: #166534;
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.if-tag:hover {
+  background-color: #e8f5e9;
+  border-color: #166534;
+  color: #14532d;
+}
+
+.if-tag-active {
+  background-color: #1e7e34 !important;
+  border-color: #145a27 !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.if-btn-primary {
+  background-color: #1e7e34;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.if-btn-primary:hover {
+  background-color: #166534;
+}
+
+.if-btn-red {
+  background-color: #ce2029;
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.if-btn-red:hover {
+  background-color: #a8171e;
+}
+
+/* =========================================================================
+   WCAG 2.1 AA & e-MAG Accessibility Guidelines & High Contrast Styles
+   ========================================================================= */
+
+/* 1. Visible Keyboard Focus (Universal Focus Outline) */
+:focus-visible {
+  outline: 3px solid #1e7e34 !important;
+  outline-offset: 2px !important;
+}
+
+/* 2. Font Scaling Modes */
+body.font-size-large {
+  font-size: 115% !important;
+}
+
+body.font-size-xlarge {
+  font-size: 130% !important;
+}
+
+/* 3. High Contrast Mode (e-MAG / WCAG AAA compliant) */
+body.high-contrast {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+body.high-contrast header,
+body.high-contrast nav,
+body.high-contrast main,
+body.high-contrast section,
+body.high-contrast div,
+body.high-contrast aside,
+body.high-contrast article {
+  background-color: #0a0a0a !important;
+  color: #ffffff !important;
+  border-color: #444444 !important;
+}
+
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast p,
+body.high-contrast span,
+body.high-contrast label,
+body.high-contrast li,
+body.high-contrast td,
+body.high-contrast th {
+  color: #ffffff !important;
+}
+
+body.high-contrast a {
+  color: #ffff00 !important;
+  text-decoration: underline !important;
+}
+
+body.high-contrast button {
+  border-color: #ffffff !important;
+}
+
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+  background-color: #121212 !important;
+  color: #ffffff !important;
+  border: 2px solid #ffffff !important;
+}
+
+body.high-contrast :focus-visible {
+  outline: 3px solid #ffff00 !important;
+  outline-offset: 3px !important;
+}
+
+body.high-contrast .bg-white,
+body.high-contrast .bg-slate-50,
+body.high-contrast .bg-slate-100 {
+  background-color: #121212 !important;
+  border-color: #555555 !important;
+}
+
+/* =========================================================================
+   Acessibilidade Interativa (Estilo Audima / e-MAG / WCAG 2.1 AA)
+   ========================================================================= */
+
+/* Tamanho de Fonte Global */
+body.font-size-small {
+  font-size: 88% !important;
+}
+body.font-size-large {
+  font-size: 115% !important;
+}
+body.font-size-xlarge {
+  font-size: 130% !important;
+}
+
+/* Monocromático (Escala de Cinza) */
+body.a11y-monochrome {
+  filter: grayscale(100%) !important;
+}
+
+/* Esconder Imagens e Ilustrações para Foco Cognitivo */
+body.a11y-hide-images img,
+body.a11y-hide-images svg:not(.a11y-keep-icon),
+body.a11y-hide-images [style*="background-image"] {
+  opacity: 0.08 !important;
+  filter: blur(4px) !important;
+}
+
+/* Modos de Cor de Fundo */
+body.a11y-bg-sepia {
+  background-color: #f7eee2 !important;
+  color: #382d20 !important;
+}
+body.a11y-bg-sepia .bg-white,
+body.a11y-bg-sepia .bg-slate-50,
+body.a11y-bg-sepia .bg-slate-100 {
+  background-color: #fdf7ee !important;
+  color: #382d20 !important;
+  border-color: #e6d7c4 !important;
+}
+
+body.a11y-bg-dark {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+}
+body.a11y-bg-dark .bg-white,
+body.a11y-bg-dark .bg-slate-50,
+body.a11y-bg-dark .bg-slate-100 {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+body.a11y-bg-yellow-black {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+}
+body.a11y-bg-yellow-black .bg-white,
+body.a11y-bg-yellow-black .bg-slate-50,
+body.a11y-bg-yellow-black .bg-slate-100 {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+body.a11y-bg-yellow-black h1,
+body.a11y-bg-yellow-black h2,
+body.a11y-bg-yellow-black h3,
+body.a11y-bg-yellow-black p,
+body.a11y-bg-yellow-black span {
+  color: #ffff00 !important;
+}
+
+/* Fonte para Dislexia / Leitura Facilitada */
+body.a11y-dyslexia-font,
+body.a11y-dyslexia-font p,
+body.a11y-dyslexia-font h1,
+body.a11y-dyslexia-font h2,
+body.a11y-dyslexia-font h3,
+body.a11y-dyslexia-font span,
+body.a11y-dyslexia-font button,
+body.a11y-dyslexia-font a {
+  font-family: 'Trebuchet MS', 'Verdana', sans-serif !important;
+  letter-spacing: 0.05em !important;
+  word-spacing: 0.12em !important;
+  line-height: 1.85 !important;
+}
+
+/* Destacar Links e Elementos Clicáveis */
+body.a11y-highlight-links a,
+body.a11y-highlight-links button:not(.a11y-ruler-btn) {
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  outline: 2px dashed #0284c7 !important;
+  outline-offset: 2px !important;
+}
+
+/* Régua de Leitura Horizontal (Apoio a TDAH e Dislexia) */
+.a11y-reading-ruler {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 42px;
+  background: rgba(254, 240, 138, 0.28);
+  border-top: 2px solid #ca8a04;
+  border-bottom: 2px solid #ca8a04;
+  pointer-events: none;
+  z-index: 999999;
+  transform: translateY(-50%);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
+}
+
+/* Destaque do Trecho em Leitura por Voz (Text-to-Speech) */
+.a11y-speaking-highlight {
+  outline: 3px solid #10b981 !important;
+  background-color: rgba(16, 185, 129, 0.2) !important;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
