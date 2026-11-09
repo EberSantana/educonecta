@@ -6,14 +6,9 @@ import {
   CheckCircle2,
   ArrowRight,
   X,
-  Filter,
-  GraduationCap,
-  Users,
-  RotateCcw,
 } from 'lucide-react';
 import { Header } from './components/Header';
 import { AuthScreen } from './components/AuthScreen';
-import { DisciplineSelector } from './components/DisciplineSelector';
 import { CoursesView } from './components/CoursesView';
 import { TurmasView } from './components/TurmasView';
 import { StudentsView } from './components/StudentsView';
@@ -1126,115 +1121,6 @@ export default function App() {
         tabIndex={-1}
         className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 focus:outline-none"
       >
-        {/* Barra Unificada de Contexto Acadêmico (Curso · Turma · Matéria) */}
-        <div className="bg-white rounded-xl border border-slate-200 p-3 shadow-xs">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2 text-xs flex-1">
-              {/* Badge Contexto */}
-              <div className="flex items-center gap-1.5 text-slate-500 font-bold uppercase tracking-wider text-[11px] shrink-0 mr-0.5">
-                <Filter className="w-3.5 h-3.5 text-[#1e7e34]" />
-                <span className="hidden sm:inline">Filtrar:</span>
-              </div>
-
-              {/* Seletor de Curso */}
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-2.5 py-1.5 shadow-2xs transition">
-                <GraduationCap className="w-4 h-4 text-[#1e7e34] shrink-0" />
-                <span className="font-semibold text-slate-500 text-[11px] shrink-0">Curso:</span>
-                <select
-                  value={selectedCourseId}
-                  onChange={(e) => {
-                    const cId = e.target.value;
-                    setSelectedCourseId(cId);
-                    const matchingTurma = turmas.find((t) => t.courseId === cId);
-                    setSelectedTurmaId(matchingTurma ? matchingTurma.id : 'all');
-                    setSelectedDisciplineId('all');
-                  }}
-                  className="bg-transparent font-bold text-slate-900 text-xs focus:outline-none cursor-pointer max-w-[190px] truncate"
-                >
-                  <option value="all">Todos os Cursos</option>
-                  {courses.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Seletor de Turma */}
-              <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-2.5 py-1.5 shadow-2xs transition">
-                <Users className="w-4 h-4 text-[#1e7e34] shrink-0" />
-                <span className="font-semibold text-slate-500 text-[11px] shrink-0">Turma:</span>
-                <select
-                  value={selectedTurmaId}
-                  onChange={(e) => {
-                    const tId = e.target.value;
-                    setSelectedTurmaId(tId);
-                    if (tId !== 'all') {
-                      const t = turmas.find((x) => x.id === tId);
-                      if (t?.disciplineId) setSelectedDisciplineId(t.disciplineId);
-                    }
-                  }}
-                  className="bg-transparent font-bold text-slate-900 text-xs focus:outline-none cursor-pointer max-w-[210px] truncate"
-                >
-                  <option value="all">Todas as Turmas</option>
-                  {(selectedCourseId === 'all'
-                    ? turmas
-                    : turmas.filter((t) => t.courseId === selectedCourseId)
-                  ).map((t) => {
-                    const isEnrolled = currentUser.enrolledTurmaIds?.includes(t.id);
-                    return (
-                      <option key={t.id} value={t.id}>
-                        {t.name} ({t.shift}){isEnrolled ? ' ★ Sua Turma' : ''}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
-
-              {/* Seletor de Matéria / Disciplina (Combobox Acessível com Busca) */}
-              <div className="flex items-center">
-                <DisciplineSelector
-                  disciplines={
-                    selectedCourseId === 'all'
-                      ? disciplines
-                      : disciplines.filter((d) => d.courseId === selectedCourseId)
-                  }
-                  selectedDisciplineId={selectedDisciplineId}
-                  onSelectDiscipline={setSelectedDisciplineId}
-                  selectedCourseId={selectedCourseId}
-                />
-              </div>
-
-              {/* Botão Limpar Filtros quando houver qualquer filtro aplicado */}
-              {(selectedCourseId !== 'all' || selectedTurmaId !== 'all' || selectedDisciplineId !== 'all') && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedCourseId('all');
-                    setSelectedTurmaId('all');
-                    setSelectedDisciplineId('all');
-                  }}
-                  className="flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-semibold text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded-lg transition border border-dashed border-slate-300 shrink-0"
-                  title="Redefinir todos os filtros"
-                >
-                  <RotateCcw className="w-3 h-3 text-slate-400" />
-                  <span>Limpar</span>
-                </button>
-              )}
-            </div>
-
-            {/* Ação rápida para o Aluno */}
-            {currentUser.role === 'student' && (
-              <button
-                type="button"
-                onClick={() => setCurrentTab('turmas')}
-                className="px-3 py-1.5 text-xs font-semibold text-[#166534] bg-[#e8f5e9] hover:bg-[#d5ecd9] rounded-xl transition border border-[#248c3d]/40 shrink-0 self-start lg:self-center"
-              >
-                + Escolher / Trocar Turma
-              </button>
-            )}
-          </div>
-        </div>
 
         {/* View Switcher */}
         {currentTab === 'courses' && (
